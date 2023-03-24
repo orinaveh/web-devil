@@ -12,7 +12,7 @@
     <li class="w-full h-full">
       <a
         class="bg-white block p-2 w-full h-full hover:bg-slate-200"
-        href="/web-devil{hrefPrefix ? `${hrefPrefix}` : ''}{url}"
+        href="/web-devil{hrefPrefix ? `${hrefPrefix}/` : ''}{url}"
       >
         <span class="font-bold capitalize">{title}</span>
         {#if author}<span> - {author}</span>{/if}

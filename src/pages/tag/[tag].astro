@@ -29,6 +29,7 @@ const { articles, tag } = Astro.props
 ---
 
 <Layout title={tag}>
+  <h1 class="capitalize text-2xl text-red-600 text-center mb-12">{tag}</h1>
   <PagesList items={articles.map((article) => ({
     title: article.data.title,
     author: article.data.author,
