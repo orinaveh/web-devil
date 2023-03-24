@@ -1,0 +1,28 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const articles = await Astro.glob('../article/*.md')
+  const tags = new Map();
+  articles.forEach((article) => {
+    article.frontmatter.tags.forEach((tag: string) => {
+        const currentState = tags?.get(tag);
+        tags.set(tag, currentState ? [...currentState, article] : [article])
+    })
+})
+  return Array.from(tags).map(([tag, articlesOfTag]) => ({
+    params: { 
+      tag: tag 
+    },
+    props: { articles: articlesOfTag, tag },
+  }))
+}
+
+const { articles, tag } = Astro.props
+---
+
+<Layout title={tag}>
+<ul class="flex flex-col gap-2">
+{articles.map((article: any) => <li class="w-full h-full"><a class="bg-white block p-2 w-full h-full hover:bg-slate-100" href={article.url}><span class="font-bold">{article.frontmatter.title}</span> - {article.frontmatter.author}</a></li>)}
+</ul>
+</Layout>

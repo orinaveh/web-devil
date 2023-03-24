@@ -10,11 +10,16 @@ type Props = MarkdownLayoutProps<{
 const { frontmatter: { title, tags, author } } = Astro.props;
 ---
 <Layout title={title}>
-    <div class="flex flex-col bg-white p-4">
-        <h1 class="text-black font-sans font-bold text-6xl">{title}</h1>
+    <div class="flex flex-col bg-white py-8 px-4 gap-4">
+        <h1 class="text-black font-sans font-bold md:text-6xl text-4xl">{title}</h1>
         <h4>מאת: {author}</h4>
     </div>
-	<article class="mx-64 text-center text-white">
+	<article class="lg:mx-64 md:mx-32 mx-16 my-6 text-center text-white">
 		<slot />
 	</article>
+    <footer class="absolute bottom-0 bg-white h-24 w-full flex flex-col p-2">
+        <div class="flex gap-2 flex-row-reverse">
+            {tags.map((tag) => (<a class="p-2  bg-black text-white hover:scale-105 capitalize" href={`/tag/${tag}`}>{tag}</a>))}
+        </div>
+    </footer>
 </Layout>
