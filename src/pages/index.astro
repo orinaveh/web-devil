@@ -1,13 +1,21 @@
 ---
+import { GITHUB_URL } from '../config';
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Web Devil">
-	<main class="flex flex-col gap-12 items-center mt-12">
+	<main class="flex flex-col gap-8 items-center mt-12">
 		<h1 class="text-white text-center text-6xl mx-16">ברוכים הבאים ל־<span class="text-red-600">WEB DEVIL</span></h1>
 		<section class="bg-white p-12 w-full">
-			<h2 class="text-center text-2xl">בלוג פיתוח רשת וקוד פתוח לקהילת המפתחים דוברי העברית</h2>
-			<h2 class="text-center text-2xl"><span class="bg-yellow-300">רוצים לתרום מאמר או כתבה מעניינת? פתחו PR כאן!</span></h2>
+			<h3 class="text-center text-2xl">בלוג פיתוח רשת וקוד פתוח לקהילת המפתחים דוברי העברית</h3>
+			<h3 class="text-center text-2xl">רוצים לתרום מאמר פרי עטכם? <a target="_blank" href={GITHUB_URL} class="bg-yellow-300 hover:bg-yellow-400">פתחו PR כאן!</a></h3>
+			<h3 class="text-center mt-8"><span class="text-center animate-shift font-extrabold text-4xl p-2 bg-red-600">האתר בתהליכי בנייה </span></h3>
+		</section>
+		<section class="p-12 w-full mt-12">
+			<h2 class="text-center text-3xl font-bold text-red-600">כתבות חדשות</h2>
+			<div class="flex">
+				
+			</div>
 		</section>
 	</main>
 </Layout>
