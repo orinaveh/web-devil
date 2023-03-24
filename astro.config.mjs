@@ -10,6 +10,9 @@ import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 
 // https://astro.build/config
+import svelte from "@astrojs/svelte";
+
+// https://astro.build/config
 export default defineConfig({
-  integrations: [mdx(), tailwind(), react()]
+  integrations: [mdx(), tailwind(), react(), svelte()]
 });

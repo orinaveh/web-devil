@@ -1,4 +1,5 @@
 ---
+import PagesList from "../../components/PagesList.svelte";
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
@@ -22,7 +23,9 @@ const { articles, tag } = Astro.props
 ---
 
 <Layout title={tag}>
-<ul class="flex flex-col gap-2">
-{articles.map((article: any) => <li class="w-full h-full"><a class="bg-white block p-2 w-full h-full hover:bg-slate-100" href={article.url}><span class="font-bold">{article.frontmatter.title}</span> - {article.frontmatter.author}</a></li>)}
-</ul>
+  <PagesList items={articles.map((article: any) => ({
+    title: article.frontmatter.title,
+    author: article.frontmatter.author,
+    url: article.url
+  }))}  />
 </Layout>

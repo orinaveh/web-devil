@@ -1,0 +1,24 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PagesList from '../../components/PagesList.svelte';
+
+async function getTags() {
+  const articles = await Astro.glob('../article/*.md');
+  const tags = new Set<string>();
+  articles.forEach((article) => {
+    article.frontmatter.tags.forEach((tag: string) => {
+      tags.add(tag);
+    });
+  });
+  return [...tags];
+}
+
+const tags = await getTags();
+---
+
+<Layout title="תגיות">
+  <PagesList hrefPrefix="tag" items={tags.map((tag) => ({
+    title: tag,
+    url: tag
+  }))}  />
+</Layout>
