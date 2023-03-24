@@ -1,4 +1,4 @@
-import { MdMenu } from 'react-icons/md';
+import { MdMenu } from 'react-icons/md/index.js';
 
 export default () => (
 <header className="p-8 bg-black flex justify-between items-center">
