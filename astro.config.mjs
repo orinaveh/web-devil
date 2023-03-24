@@ -14,5 +14,6 @@ import svelte from "@astrojs/svelte";
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://orinaveh.github.io',
   integrations: [mdx(), tailwind(), react(), svelte()]
 });
