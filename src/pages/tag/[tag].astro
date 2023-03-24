@@ -1,12 +1,18 @@
 ---
+import { getCollection, CollectionEntry } from 'astro:content';
 import PagesList from "../../components/PagesList.svelte";
 import Layout from "../../layouts/Layout.astro";
 
+interface Props {
+  tag: string;
+  articles: CollectionEntry<'articles'>[];
+}
+
 export async function getStaticPaths() {
-  const articles = await Astro.glob('../article/*.md')
+  const articles = await getCollection('articles')
   const tags = new Map();
   articles.forEach((article) => {
-    article.frontmatter.tags.forEach((tag: string) => {
+    article.data.tags.forEach((tag: string) => {
         const currentState = tags?.get(tag);
         tags.set(tag, currentState ? [...currentState, article] : [article])
     })
@@ -23,9 +29,9 @@ const { articles, tag } = Astro.props
 ---
 
 <Layout title={tag}>
-  <PagesList items={articles.map((article: any) => ({
-    title: article.frontmatter.title,
-    author: article.frontmatter.author,
-    url: article.url
+  <PagesList items={articles.map((article) => ({
+    title: article.data.title,
+    author: article.data.author,
+    url: `/article/${article.slug}`
   }))}  />
 </Layout>

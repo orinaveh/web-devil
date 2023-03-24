@@ -1,12 +1,13 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import PagesList from '../../components/PagesList.svelte';
 
 async function getTags() {
-  const articles = await Astro.glob('../article/*.md');
+  const articles = await getCollection('articles');
   const tags = new Set<string>();
   articles.forEach((article) => {
-    article.frontmatter.tags.forEach((tag: string) => {
+    article.data.tags.forEach((tag: string) => {
       tags.add(tag);
     });
   });

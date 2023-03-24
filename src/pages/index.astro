@@ -1,6 +1,18 @@
 ---
 import { GITHUB_URL } from '../config';
 import Layout from '../layouts/Layout.astro';
+
+async function getLatestArticles() {
+  const articles = await Astro.glob('../article/*.md');
+  const tags = new Set<string>();
+  articles.forEach((article) => {
+    article.frontmatter.tags.forEach((tag: string) => {
+      tags.add(tag);
+    });
+  });
+  return [...tags];
+}
+
 ---
 
 <Layout title="Web Devil">
