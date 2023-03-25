@@ -14,6 +14,7 @@ const articlesCollection = defineCollection({
     tags: z.array(z.string()),
     author: z.string(),
     publishDate: z.string().transform((str) => parseDMY(str)),
+    description: z.string().optional()
   }),
 });
 
