@@ -1,6 +1,7 @@
 ---
-import { CollectionEntry, getCollection } from 'astro:content';
-import { GITHUB_URL } from '../config';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import config from '../config';
 import Layout from '../layouts/Layout.astro';
 
 interface Props {
@@ -11,6 +12,8 @@ interface Props {
     CollectionEntry<'articles'>
   ];
 }
+
+const { GITHUB_URL } = config;
 
 async function getLatestArticles() {
   const articles = await getCollection('articles');
@@ -25,44 +28,54 @@ const latestArticles = await getLatestArticles();
 ---
 
 <Layout title="Web Devil">
-  <main class="flex flex-col gap-8 items-center mt-12">
-    <h1 class="text-white text-center text-6xl mx-16">
-      ברוכים הבאים ל־<span class="text-red-600">WEB DEVIL</span>
+  <main class="mt-12 flex flex-col items-center gap-8">
+    <h1 class="mx-16 text-center text-6xl text-white">
+      ברוכים הבאים ל־
+      <span class="text-red-600">WEB DEVIL</span>
     </h1>
-    <section class="bg-white p-12 w-full">
+    <section class="w-full bg-white p-12">
       <h3 class="text-center text-2xl">
         בלוג פיתוח רשת וקוד פתוח לקהילת המפתחים דוברי העברית
       </h3>
-      <h3 class="text-center text-2xl">
-        רוצים לתרום מאמר פרי עטכם? <a
+      <h4 class="text-center text-2xl">
+        רוצים לתרום מאמר פרי עטכם?
+        {' '}
+        <a
           target="_blank"
           href={GITHUB_URL}
-          class="bg-yellow-300 hover:bg-yellow-400">פתחו PR כאן!</a
+          class="bg-yellow-300 hover:bg-yellow-400"
+          rel="noreferrer"
         >
-      </h3>
-      <h3 class="text-center mt-8">
+          פתחו PR כאן!
+        </a>
+      </h4>
+      <h4 class="mt-8 text-center">
         <span
-          class="text-center animate-shift font-extrabold text-2xl md:text-4xl p-2 bg-red-600"
-          >האתר בתהליכי בנייה
+          class="animate-shift bg-red-600 p-2 text-center text-2xl font-extrabold md:text-4xl"
+        >
+          האתר בתהליכי בנייה
         </span>
-      </h3>
+      </h4>
     </section>
     <section class="p-12">
-      <h2 class="text-center text-3xl font-bold text-red-600 mb-8">
+      <h3 class="mb-8 text-center text-3xl font-bold text-red-600">
         כתבות חדשות
-      </h2>
+      </h3>
       <div
-        class="grid md:grid-rows-2 md:grid-cols-2 justify-items-center items-center gap-12 relative"
+        class="relative grid items-center justify-items-center gap-12 md:grid-cols-2 md:grid-rows-2"
       >
         {
           latestArticles.map((article) => (
-            <div class="w-64 h-64 text-center relative">
+            <div class="relative h-64 w-64 text-center">
               <a
                 href={`article/${article.slug}`}
-                class="w-full h-full block p-2 bg-white hover:bg-slate-200"
+                class="block h-full w-full bg-white p-2 hover:bg-slate-200"
               >
-                <h4 class="font-bold text-lg">{article.data.title}</h4>
-                <h5>כותב: {article.data.author}</h5>
+                <h4 class="text-lg font-bold">{article.data.title}</h4>
+                <h5>
+                  כותב:
+                  {article.data.author}
+                </h5>
                 <h5>
                   תאריך: {article.data.publishDate.toLocaleDateString('en-GB')}
                 </h5>
@@ -72,7 +85,7 @@ const latestArticles = await getLatestArticles();
                 {article.data.tags.map((tag) => (
                   <a
                     href={`tag/${tag}`}
-                    class="capitalize underline bg-transparent block z-2  hover:bg-yellow-300"
+                    class="z-10 block bg-transparent capitalize underline hover:bg-yellow-300"
                   >
                     {tag}
                   </a>

@@ -1,1 +1,3 @@
-export const GITHUB_URL = 'https://github.com/orinaveh/web-devil' 
+export default {
+  GITHUB_URL: 'https://github.com/orinaveh/web-devil',
+};

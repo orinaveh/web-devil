@@ -1,34 +1,56 @@
 ---
-import { CollectionEntry, getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
-// 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
-    const blogEntries = await getCollection('articles');
-    return blogEntries.map(entry => ({
-        params: { slug: entry.slug }, props: { entry },
-    }));
+  const blogEntries = await getCollection('articles');
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
 }
 
 type Props = {
-    entry: CollectionEntry<'articles'>;
-}
+  entry: CollectionEntry<'articles'>;
+};
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
+
 <Layout title={entry.data.title} description={entry.data.description}>
-    <div class="flex flex-col bg-white py-8 px-4 gap-4">
-        <h1 class="text-black font-sans font-bold md:text-6xl text-4xl">{entry.data.title}</h1>
-        {entry.data.description && <h2 class="text-xl">{entry.data.description}</h2>}
-        <h4>מאת: {entry.data.author} <span>{entry.data.publishDate.toLocaleDateString('en-GB')}</span></h4>
+  <div class="flex flex-col gap-4 bg-white py-8 px-4">
+    <h1 class="font-sans text-4xl font-bold text-black md:text-6xl">
+      {entry.data.title}
+    </h1>
+    {
+      entry.data.description && (
+        <h2 class="text-xl">{entry.data.description}</h2>
+      )
+    }
+    <h3>
+      מאת:
+      {entry.data.author}
+      {' '}
+      <span>{entry.data.publishDate.toLocaleDateString('en-GB')}</span>
+    </h3>
+  </div>
+  <article class="mx-16 my-6 text-center text-white md:mx-32 lg:mx-64">
+    <Content />
+  </article>
+  <footer class="absolute bottom-0 flex h-24 w-full flex-col bg-white p-2">
+    <div class="flex flex-row-reverse gap-2">
+      {
+        entry.data.tags.map((tag) => (
+          <a
+            class="bg-black p-2 capitalize text-white hover:scale-105"
+            href={`/web-devil/tag/${tag}`}
+          >
+            {tag}
+          </a>
+        ))
+      }
     </div>
-	<article class="lg:mx-64 md:mx-32 mx-16 my-6 text-center text-white">
-        <Content />
-    </article>
-    <footer class="absolute bottom-0 bg-white h-24 w-full flex flex-col p-2">
-        <div class="flex gap-2 flex-row-reverse">
-            {entry.data.tags.map((tag) => (<a class="p-2  bg-black text-white hover:scale-105 capitalize" href={`/web-devil/tag/${tag}`}>{tag}</a>))}
-        </div>
-    </footer>
+  </footer>
 </Layout>

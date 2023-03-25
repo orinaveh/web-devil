@@ -1,10 +1,10 @@
 import { z, defineCollection } from 'astro:content';
 
 function parseDMY(value: string) {
-  const date = value.split("-");
-  const d = parseInt(date[0], 10),
-      m = parseInt(date[1], 10),
-      y = parseInt(date[2], 10);
+  const date = value.split('-');
+  const d = parseInt(date[0], 10);
+  const m = parseInt(date[1], 10);
+  const y = parseInt(date[2], 10);
   return new Date(y, m - 1, d);
 }
 
@@ -14,10 +14,11 @@ const articlesCollection = defineCollection({
     tags: z.array(z.string()),
     author: z.string(),
     publishDate: z.string().transform((str) => parseDMY(str)),
-    description: z.string().optional()
+    description: z.string().optional(),
   }),
 });
 
+// eslint-disable-next-line import/prefer-default-export
 export const collections = {
-  'articles': articlesCollection,
+  articles: articlesCollection,
 };
